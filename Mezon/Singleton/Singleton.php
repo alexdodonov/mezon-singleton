@@ -19,6 +19,8 @@ class Singleton
 
     /**
      * Created instances of different objects
+     *
+     * @var array<string, object>
      */
     private static $instances;
 
@@ -38,8 +40,10 @@ class Singleton
 
     /**
      * Function returns instance of the object
+     *
+     * @return object stored object
      */
-    public static function getInstance()
+    public static function getInstance(): object
     {
         $className = get_called_class();
 
@@ -65,7 +69,7 @@ class Singleton
     /**
      * Destroy object
      */
-    public function destroy()
+    public function destroy(): void
     {
         $className = get_called_class();
 

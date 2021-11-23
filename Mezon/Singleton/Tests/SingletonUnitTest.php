@@ -1,40 +1,30 @@
 <?php
+namespace Mezon\Singleton\Tests;
 
-class SingletonFoo extends \Mezon\Singleton\Singleton
-{
+use PHPUnit\Framework\TestCase;
 
-    public $tmp = 'Default foo value';
-}
-
-class SingletonBar extends \Mezon\Singleton\Singleton
-{
-
-    public $tmp = 'Default bar value';
-}
-
-class SingletonParams extends \Mezon\Singleton\Singleton
-{
-
-    public $tmp = 0;
-
-    public function __construct($param)
-    {
-        $this->tmp = $param;
-    }
-}
-
-function hack()
+/**
+ * Method returns instance of the stored object
+ *
+ * @return SingletonParams
+ * @psalm-suppress MoreSpecificReturnType, LessSpecificReturnStatement
+ */
+function hack(): SingletonParams
 {
     return SingletonParams::getInstance(1);
 }
 
-class SingletonUnitTest extends \PHPUnit\Framework\TestCase
+/**
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
+class SingletonUnitTest extends TestCase
 {
 
     /**
      * This test checks common singleton's functionality
      */
-    public function testCommonWork()
+    public function testCommonWork(): void
     {
         $object = new SingletonFoo();
 
@@ -44,15 +34,15 @@ class SingletonUnitTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test checks that second object can't be created.
+     * Test checks that second object can't be created
      */
-    public function testDirectCreationTest()
+    public function testDirectCreationTest(): void
     {
         $object = new SingletonBar();
 
         try {
             $object = new SingletonBar();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $object->destroy();
             $this->assertEquals(true, true, 'Invalid object creation');
             return;
@@ -62,9 +52,9 @@ class SingletonUnitTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test checks new ClassName() directives work.
+     * Test checks new ClassName() directives work
      */
-    public function testTwoObjects()
+    public function testTwoObjects(): void
     {
         $object1 = new SingletonFoo();
         $object2 = new SingletonBar();
@@ -77,15 +67,15 @@ class SingletonUnitTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test checks new ClassName() directives work.
+     * Test checks new ClassName() directives work
      */
-    public function testCloneObject()
+    public function testCloneObject(): void
     {
         $object1 = new SingletonFoo();
 
         try {
             $object2 = clone $object1;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $object1->destroy();
             $this->assertEquals(true, true, 'Invalid object cloning');
             return;
@@ -96,9 +86,9 @@ class SingletonUnitTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Validating params passing through constructor.
+     * Validating params passing through constructor
      */
-    public function testArgsPassing()
+    public function testArgsPassing(): void
     {
         $object = hack();
 
